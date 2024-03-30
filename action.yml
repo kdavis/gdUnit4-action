@@ -135,10 +135,11 @@ runs:
       if: ${{ !cancelled() }}
       env:
         GODOT_BIN: '/home/runner/godot-linux/godot'
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
         echo -e "\e[94mStart of the recovery of the project cache ...\e[0m"
-        $GODOT_BIN --path ${{ inputs.working-directory }} -e --headless --quit-after 2000
+        $GODOT_BIN --path ./ -e --headless --quit-after 2000
         echo -e "\e[94mProject cache successfully restored.\e[0m"
 
     - name: 'Run Tests'
@@ -146,10 +147,9 @@ runs:
       env:
         GODOT_BIN: '/home/runner/godot-linux/godot'
       uses: actions/github-script@v7
-      working-directory: ${{ inputs.working-directory }}
       with:
         script: |
-          const { runTests } = require('./.gdunit4_action/unit-test/index.js')
+          const { runTests } = require('${{ inputs.working-directory }}/.gdunit4_action/unit-test/index.js')
           const args = {
             timeout: '${{ inputs.timeout }}',
             paths: `${{ inputs.paths }}`,
@@ -166,6 +166,6 @@ runs:
 
     - name: 'Upload Unit Test Reports'
       if: ${{ !cancelled() }}
-      uses: ./.gdunit4_action/upload-test-report
+      uses: ${{ inputs.working-directory }}/.gdunit4_action/upload-test-report
       with:
         report-name: ${{ inputs.report-name }}
