@@ -14,6 +14,10 @@ inputs:
     description: 'Set to true for Godot .Net (C#).'
     required: false
     default: 'false'
+  working-directory:
+    description: 'Working directory of the Godot project'
+    required: false
+    default: './'
   version:
     description: 'The version of GdUnit4 to use. (e.g. "v4.2.0", "latest", "master").'
     required: false
@@ -80,6 +84,10 @@ runs:
     - name: 'Install gdUnit4 plugin - ${{ inputs.version }}'
       shell: bash
       run: |
+        if ${{ inputs.working-directory != "./" }}; then
+          cd ${{ inputs.working-directory }}
+        fi
+        cd ${{ inputs.version }}
         if ${{ inputs.version == 'installed' }}; then
           echo -e "\e[33m Info: Using the installed GdUnit4 plugin. \e[0m"
           gdunit_version="v$(grep -oP '^version="\K[^"]+' ./addons/gdUnit4/plugin.cfg)"
