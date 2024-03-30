@@ -84,7 +84,7 @@ runs:
     - name: 'Install gdUnit4 plugin - ${{ inputs.version }}'
       shell: bash
       run: |
-        if ${{ inputs.working-directory != "./" }}; then
+        if ${{ inputs.working-directory != './' }}; then
           cd ${{ inputs.working-directory }}
         fi
         cd ${{ inputs.version }}
