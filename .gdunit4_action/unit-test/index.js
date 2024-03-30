@@ -38,7 +38,7 @@ async function runTests(exeArgs, core) {
 
     const args = [
       "--auto-servernum",
-      pathLib.join(workingDirectory, "./addons/gdUnit4/runtest.sh"),
+      "./addons/gdUnit4/runtest.sh",
       "--audio-driver Dummy",
       "--display-driver x11",
       "--rendering-driver opengl3",
@@ -54,7 +54,7 @@ async function runTests(exeArgs, core) {
 
     while (retriesCount <= retries) {
       const child = spawnSync("xvfb-run", args, {
-        cwd: getProjectPath(),
+        cwd: pathLib.join(getProjectPath(), workingDirectory),
         timeout: timeout * 1000 * 60,
         encoding: "utf-8",
         shell: true,
