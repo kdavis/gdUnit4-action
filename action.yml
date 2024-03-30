@@ -84,7 +84,7 @@ runs:
     - name: 'Install gdUnit4 plugin - ${{ inputs.version }}'
       shell: bash
       run: |
-        wd=${{ inputs.working-directory }}
+        wd=${{ inputs.working-directory }}/
         if ${{ inputs.version == 'installed' }}; then
           echo -e "\e[33m Info: Using the installed GdUnit4 plugin. \e[0m"
           gdunit_version="v$(grep -oP '^version="\K[^"]+' ${wd}addons/gdUnit4/plugin.cfg)"
