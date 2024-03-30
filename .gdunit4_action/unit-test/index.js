@@ -36,11 +36,9 @@ async function runTests(exeArgs, core) {
       console_warning(`Use only the first entry of paths, ${pathsArray}!`);
     }
 
-    var basePath = pathLib.join(getProjectPath(), workingDirectory);
-
     const args = [
       "--auto-servernum",
-      "./addons/gdUnit4/runtest.sh",
+      pathLib.join(workingDirectory, "addons/gdUnit4/runtest.sh"),
       "--audio-driver Dummy",
       "--display-driver x11",
       "--rendering-driver opengl3",
@@ -50,13 +48,13 @@ async function runTests(exeArgs, core) {
       `${arguments}`
     ];
 
-    console_info(`Running GdUnit4 ${process.env.GDUNIT_VERSION} tests...`, basePath, args);
+    console_info(`Running GdUnit4 ${process.env.GDUNIT_VERSION} tests...`, getProjectPath(), args);
 
     let retriesCount = 0;
 
     while (retriesCount <= retries) {
       const child = spawnSync("xvfb-run", args, {
-        cwd: basePath,
+        cwd: getProjectPath(),
         timeout: timeout * 1000 * 60,
         encoding: "utf-8",
         shell: true,
