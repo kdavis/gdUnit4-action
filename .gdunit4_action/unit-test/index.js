@@ -38,7 +38,7 @@ async function runTests(exeArgs, core) {
 
     const args = [
       "--auto-servernum",
-      pathLib.join(workingDirectory, "addons/gdUnit4/runtest.sh"),
+      pathLib.join("./", workingDirectory, "addons/gdUnit4/runtest.sh"),
       "--audio-driver Dummy",
       "--display-driver x11",
       "--rendering-driver opengl3",
