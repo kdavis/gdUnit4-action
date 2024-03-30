@@ -155,7 +155,8 @@ runs:
             timeout: '${{ inputs.timeout }}',
             paths: `${{ inputs.paths }}`,
             arguments: `${{ inputs.arguments }}`,
-            retries: ${{ inputs.retries }}
+            retries: ${{ inputs.retries }},
+            workingDirectory: `${{ inputs.working-directory }}`
           };
           await runTests(args, core);
 

@@ -26,7 +26,7 @@ function console_error(...args) {
 
 async function runTests(exeArgs, core) {
   try {
-    const { timeout, paths, arguments, retries } = exeArgs;
+    const { timeout, paths, arguments, retries, workingDirectory } = exeArgs;
     // Split by newline or comma, map, trim, and filter empty strings
     const pathsArray = paths.split(/[\r\n,]+/).map((entry) => entry.trim()).filter(Boolean);
     // verify support of multi paths/fixed since v4.2.1
@@ -38,7 +38,7 @@ async function runTests(exeArgs, core) {
 
     const args = [
       "--auto-servernum",
-      "./addons/gdUnit4/runtest.sh",
+      pathLib.join(workingDirectory, "./addons/gdUnit4/runtest.sh"),
       "--audio-driver Dummy",
       "--display-driver x11",
       "--rendering-driver opengl3",
