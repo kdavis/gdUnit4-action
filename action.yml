@@ -149,7 +149,7 @@ runs:
       uses: actions/github-script@v7
       with:
         script: |
-          const { runTests } = require('./gdunit4_action/unit-test/index.js')
+          const { runTests } = require('./.gdunit4_action/unit-test/index.js')
           const args = {
             timeout: '${{ inputs.timeout }}',
             paths: `${{ inputs.paths }}`,
