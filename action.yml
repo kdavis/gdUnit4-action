@@ -83,18 +83,18 @@ runs:
 
     - name: 'Install gdUnit4 plugin - ${{ inputs.version }}'
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       run: |
-        wd=${{ inputs.working-directory }}/
         if ${{ inputs.version == 'installed' }}; then
           echo -e "\e[33m Info: Using the installed GdUnit4 plugin. \e[0m"
-          gdunit_version="v$(grep -oP '^version="\K[^"]+' ${wd}addons/gdUnit4/plugin.cfg)"
+          gdunit_version="v$(grep -oP '^version="\K[^"]+' ./addons/gdUnit4/plugin.cfg)"
           echo "GDUNIT_VERSION=${gdunit_version}" >> "$GITHUB_ENV"
           exit 0
         fi
 
-        if [[ -d ${wd}addons/gdUnit4 ]]; then
+        if [[ -d ./addons/gdUnit4 ]]; then
           echo -e "\e[33m Info: Found a previous installation of GdUnit4, deleting it now. \e[0m"
-          rm -rf ${wd}addons/gdUnit4
+          rm -rf ./addons/gdUnit4
         fi
 
         # Download requested gdUnit4 version
@@ -113,12 +113,12 @@ runs:
 
         # Install requested gdUnit4 version
         echo -e "\e[34m Install GdUnit4 \e[92m${gdunit_version} \e[34mplugin in the project \e[0m"
-        mkdir -p ${wd}addons/gdUnit4/
-        cp -R ./.install-gdunit4/addons/gdUnit4 ${wd}addons
+        mkdir -p ./addons/gdUnit4/
+        cp -R ./.install-gdunit4/addons/gdUnit4 ./addons
         chmod +x ./addons/gdUnit4/runtest.sh
         echo -e "\e[34m Installed plugins\e[0m"
         echo -e "\e[34m -----------------\e[0m"
-        ls --color=auto -lsA ${wd}addons
+        ls --color=auto -lsA ./addons
         echo -e "\e[34m -----------------\e[0m"
 
     - name: 'Restore .Net Project'
@@ -146,6 +146,7 @@ runs:
       env:
         GODOT_BIN: '/home/runner/godot-linux/godot'
       uses: actions/github-script@v7
+      working-directory: ${{ inputs.working-directory }}
       with:
         script: |
           const { runTests } = require('./.gdunit4_action/unit-test/index.js')
