@@ -149,7 +149,7 @@ runs:
       uses: actions/github-script@v7
       with:
         script: |
-          const { runTests } = require('${{ inputs.working-directory }}/.gdunit4_action/unit-test/index.js')
+          const { runTests } = require('./gdunit4_action/unit-test/index.js')
           const args = {
             timeout: '${{ inputs.timeout }}',
             paths: `${{ inputs.paths }}`,
@@ -166,6 +166,6 @@ runs:
 
     - name: 'Upload Unit Test Reports'
       if: ${{ !cancelled() }}
-      uses: ${{ inputs.working-directory }}/.gdunit4_action/upload-test-report
+      uses: ./.gdunit4_action/upload-test-report
       with:
         report-name: ${{ inputs.report-name }}
